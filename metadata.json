@@ -1,0 +1,6 @@
+{
+  "name": "SK Pembagian Jam Mengajar SMPN 7 Sentani",
+  "description": "Aplikasi Pembuatan SK Pembagian Jam Mengajar dan Tugas Tambahan Guru SMP Negeri 7 Sentani (Kolektif & Perorangan)",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
