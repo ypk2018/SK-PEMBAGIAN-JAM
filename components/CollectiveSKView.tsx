@@ -71,7 +71,7 @@ export default function CollectiveSKView({ teachers, skConfig }: CollectiveSKVie
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              Surat SK (F4 Portrait)
+              Surat SK (Lembar 1 & 2)
             </button>
             <button
               onClick={() => { setActiveView('lampiran_only'); setPrintOrientation('landscape'); }}
@@ -119,226 +119,262 @@ export default function CollectiveSKView({ teachers, skConfig }: CollectiveSKVie
       <div className="space-y-8">
         
         {/* ========================================================================= */}
-        {/* PART 1: NASKAH UTAMA SURAT KEPUTUSAN (F4 PORTRAIT STYLE) */}
+        {/* PART 1: NASKAH UTAMA SURAT KEPUTUSAN (F4 PORTRAIT STYLE - LEMBAR 1 & 2) */}
         {/* ========================================================================= */}
         {(activeView === 'all' || activeView === 'sk_only') && (
-          <div className="max-w-4xl mx-auto bg-white p-8 sm:p-12 shadow-lg border border-slate-200 rounded-xl space-y-6 text-slate-900 text-sm font-serif leading-relaxed print:shadow-none print:border-none print:p-0 print:max-w-none print:w-full print:f4-portrait">
-            
-            {/* Visual Indicator of F4 Portrait Format for Screen */}
-            <div className="flex items-center justify-between pb-2 border-b border-slate-200 print:hidden text-slate-500 text-xs">
-              <span className="flex items-center gap-1.5 font-sans font-semibold text-slate-800 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200">
-                <FileText className="w-3.5 h-3.5 text-slate-600" />
-                Ukuran Kertas: F4 / Legal (21.5 × 33 cm) · Format Portrait (Tegak)
-              </span>
-              <span className="font-sans text-[11px] text-slate-500">Standar Surat Keputusan Dinas</span>
-            </div>
-
-            {/* Kop Surat Resmi (Format Tata Naskah Dinas) */}
-            <div className="w-full pb-2 mb-4">
-              {/* Baris Atas: Logo Kiri, Nama Instansi/Sekolah, Logo Kanan */}
-              <div className="flex items-center justify-between gap-4">
-                {/* Logo Kiri */}
-                <div className="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center shrink-0">
-                  {skConfig.leftLogo ? (
-                    <img src={skConfig.leftLogo} alt="Logo Kiri" className="w-20 h-20 sm:w-24 sm:h-24 object-contain" />
-                  ) : (
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-emerald-800 text-white rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold text-center p-1 shadow">
-                      PEMDA
-                    </div>
-                  )}
-                </div>
-
-                {/* Teks Lembaga & Sekolah */}
-                <div className="text-center flex-1 px-2 space-y-1">
-                  <h3 className="text-xs sm:text-sm font-bold tracking-widest uppercase text-slate-900 leading-tight">
-                    PEMERINTAH KABUPATEN JAYAPURA
-                  </h3>
-                  <h3 className="text-xs sm:text-sm font-bold tracking-widest uppercase text-slate-900 leading-tight">
-                    DINAS PENDIDIKAN
-                  </h3>
-                  <h2 className="text-base sm:text-xl md:text-2xl font-black tracking-wide uppercase text-slate-950 pt-0.5 leading-tight">
-                    {skConfig.schoolName}
-                  </h2>
-                </div>
-
-                {/* Logo Kanan */}
-                <div className="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center shrink-0">
-                  {skConfig.rightLogo ? (
-                    <img src={skConfig.rightLogo} alt="Logo Kanan" className="w-20 h-20 sm:w-24 sm:h-24 object-contain" />
-                  ) : (
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-amber-600 text-white rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold text-center p-1 shadow">
-                      SEKOLAH
-                    </div>
-                  )}
-                </div>
+          <div className="space-y-8">
+            {/* --------------------------------------------------------------------- */}
+            {/* LEMBAR KE-1: KONSIDERAN (KOP, JUDUL, MENIMBANG, MENGINGAT, MEMPERHATIKAN) */}
+            {/* --------------------------------------------------------------------- */}
+            <div className="max-w-4xl mx-auto bg-white p-8 sm:p-12 shadow-lg border border-slate-200 rounded-xl space-y-6 text-slate-900 text-sm font-serif leading-relaxed print:shadow-none print:border-none print:p-0 print:max-w-none print:w-full print:f4-portrait">
+              
+              {/* Visual Indicator of F4 Portrait Format for Screen */}
+              <div className="flex items-center justify-between pb-2 border-b border-slate-200 print:hidden text-slate-500 text-xs">
+                <span className="flex items-center gap-1.5 font-sans font-semibold text-slate-800 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200">
+                  <FileText className="w-3.5 h-3.5 text-slate-600" />
+                  Ukuran Kertas: F4 / Legal (21.5 × 33 cm) · Lembar Ke-1: Konsideran SK
+                </span>
+                <span className="font-sans text-[11px] font-medium text-slate-600 bg-slate-50 px-2 py-0.5 rounded border border-slate-200">
+                  Halaman 1 dari 2 (SK)
+                </span>
               </div>
 
-              {/* Baris Alamat Memanjang Penuh Di Bawah Logo */}
-              <div className="text-center pt-2 pb-1.5 text-[11px] sm:text-xs font-sans text-slate-700 tracking-normal w-full border-t border-slate-300 mt-2">
-                <p className="leading-relaxed">
-                  {skConfig.schoolAddress} &nbsp;·&nbsp; Telepon: {skConfig.schoolPhone} &nbsp;·&nbsp; Email: {skConfig.schoolEmail}
-                </p>
-              </div>
-
-              {/* Garis Ganda Pembatas Kop Surat Resmi (Garis Tebal & Tipis) */}
-              <div className="w-full mt-0.5">
-                <div className="border-b-[3px] border-slate-950 w-full mb-[2px]"></div>
-                <div className="border-b-[1px] border-slate-950 w-full"></div>
-              </div>
-            </div>
-
-            {/* Title */}
-            <div className="text-center space-y-1.5 pt-2">
-              <h4 className="font-bold uppercase tracking-wide text-sm sm:text-base underline underline-offset-4">
-                SURAT KEPUTUSAN KEPALA {skConfig.schoolName}
-              </h4>
-              <p className="font-semibold text-xs tracking-wider">
-                Nomor : {skConfig.skNumber}
-              </p>
-              <div className="pt-2">
-                <p className="font-bold text-xs uppercase tracking-wide">TENTANG</p>
-                <p className="font-bold text-xs uppercase tracking-wide max-w-2xl mx-auto text-center leading-normal">
-                  PEMBAGIAN TUGAS GURU DALAM KEGIATAN PROSES BELAJAR MENGAJAR, BIMBINGAN DAN KONSELING, TUGAS TAMBAHAN DAN TUGAS KARYAWAN PADA SEMESTER {skConfig.semester.toUpperCase()} TAHUN PELAJARAN {skConfig.academicYear}
-                </p>
-              </div>
-              <p className="font-bold uppercase text-xs pt-2">KEPALA {skConfig.schoolName}</p>
-            </div>
-
-            {/* Menimbang */}
-            <div className="space-y-3 text-xs leading-relaxed">
-              <div className="grid grid-cols-12 gap-2">
-                <div className="col-span-2 font-semibold">Menimbang</div>
-                <div className="col-span-1 text-center">:</div>
-                <div className="col-span-9 space-y-2">
-                  <div className="flex gap-2">
-                    <span className="font-semibold shrink-0">a.</span>
-                    <p className="text-justify">
-                      Bahwa proses belajar mengajar merupakan inti proses pendidikan dan pelaksanaan kegiatan pada satuan pendidikan sebagai bentuk Implementasi Kurikulum Merdeka dalam rangka pemulihan pembelajaran;
-                    </p>
+              {/* Kop Surat Resmi (Format Tata Naskah Dinas) */}
+              <div className="w-full pb-2 mb-4">
+                {/* Baris Atas: Logo Kiri, Nama Instansi/Sekolah, Logo Kanan */}
+                <div className="flex items-center justify-between gap-4">
+                  {/* Logo Kiri */}
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center shrink-0">
+                    {skConfig.leftLogo ? (
+                      <img src={skConfig.leftLogo} alt="Logo Kiri" className="w-20 h-20 sm:w-24 sm:h-24 object-contain" />
+                    ) : (
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-emerald-800 text-white rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold text-center p-1 shadow">
+                        PEMDA
+                      </div>
+                    )}
                   </div>
-                  <div className="flex gap-2">
-                    <span className="font-semibold shrink-0">b.</span>
-                    <p className="text-justify">
-                      Bahwa untuk menjamin kelancaran Proses Belajar Mengajar (PBM) perlu ditetapkan Pemenuhan Beban Kerja Guru dan Kepala Sekolah, Pembagian Tugas Guru dalam Proses Belajar Mengajar dan Bimbingan, serta Tugas Tambahan pada Kurikulum yang diterapkan di {skConfig.schoolName}.
-                    </p>
+
+                  {/* Teks Lembaga & Sekolah */}
+                  <div className="text-center flex-1 px-2 space-y-1">
+                    <h3 className="text-xs sm:text-sm font-bold tracking-widest uppercase text-slate-900 leading-tight">
+                      PEMERINTAH KABUPATEN JAYAPURA
+                    </h3>
+                    <h3 className="text-xs sm:text-sm font-bold tracking-widest uppercase text-slate-900 leading-tight">
+                      DINAS PENDIDIKAN
+                    </h3>
+                    <h2 className="text-base sm:text-xl md:text-2xl font-black tracking-wide uppercase text-slate-950 pt-0.5 leading-tight">
+                      {skConfig.schoolName}
+                    </h2>
+                  </div>
+
+                  {/* Logo Kanan */}
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center shrink-0">
+                    {skConfig.rightLogo ? (
+                      <img src={skConfig.rightLogo} alt="Logo Kanan" className="w-20 h-20 sm:w-24 sm:h-24 object-contain" />
+                    ) : (
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-amber-600 text-white rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold text-center p-1 shadow">
+                        SEKOLAH
+                      </div>
+                    )}
                   </div>
                 </div>
+
+                {/* Baris Alamat Memanjang Penuh Di Bawah Logo */}
+                <div className="text-center pt-2 pb-1.5 text-[11px] sm:text-xs font-sans text-slate-700 tracking-normal w-full border-t border-slate-300 mt-2">
+                  <p className="leading-relaxed">
+                    {skConfig.schoolAddress} &nbsp;·&nbsp; Telepon: {skConfig.schoolPhone} &nbsp;·&nbsp; Email: {skConfig.schoolEmail}
+                  </p>
+                </div>
+
+                {/* Garis Ganda Pembatas Kop Surat Resmi (Garis Tebal & Tipis) */}
+                <div className="w-full mt-0.5">
+                  <div className="border-b-[3px] border-slate-950 w-full mb-[2px]"></div>
+                  <div className="border-b-[1px] border-slate-950 w-full"></div>
+                </div>
               </div>
 
-              {/* Mengingat */}
-              <div className="grid grid-cols-12 gap-2 pt-2">
-                <div className="col-span-2 font-semibold">Mengingat</div>
-                <div className="col-span-1 text-center">:</div>
-                <div className="col-span-9 space-y-1.5">
-                  {[
-                    'Undang-Undang Nomor 20 Tahun 2003 tentang Sistem Pendidikan Nasional.',
-                    'Undang-Undang Nomor 32 Tahun 2004 tentang Pemerintahan Daerah.',
-                    'Undang-Undang Nomor 14 Tahun 2005 tentang Guru dan Dosen sebagai Tenaga Profesional.',
-                    'Peraturan Pemerintah Nomor 74 Tahun 2008 tentang Guru.',
-                    'Peraturan Pemerintah Nomor 4 Tahun 2022 tentang Standar Nasional Pendidikan.',
-                    'Permendikbud Nomor 15 Tahun 2018 tentang Pemenuhan Beban Kerja Guru, Kepala Sekolah, dan Pengawas Sekolah.',
-                    'Permendikbudristek Nomor 5 Tahun 2022 tentang Standar Kompetensi Lulusan pada PAUD, Jenjang Pendidikan Dasar, dan Pendidikan Menengah.',
-                    'Permendikbudristek Nomor 7 Tahun 2022 tentang Standar Isi pada PAUD, Jenjang Pendidikan Dasar, dan Pendidikan Menengah.',
-                    'Permendikbudristek Nomor 16 Tahun 2022 tentang Standar Proses pada PAUD, Jenjang Pendidikan Dasar, dan Pendidikan Menengah.',
-                    'Permendikbudristek Nomor 21 Tahun 2022 tentang Standar Penilaian Pendidikan pada PAUD, Jenjang Pendidikan Dasar, dan Pendidikan Menengah.',
-                    'Keputusan Menteri Pendidikan, Kebudayaan, Riset, dan Teknologi Nomor 262/M/2022 tentang Pedoman Pemberlakuan Kurikulum dalam Rangka Pemulihan Pembelajaran.',
-                  ].map((law, index) => (
-                    <div key={index} className="flex gap-2 text-justify">
-                      <span className="font-semibold shrink-0">{index + 1}.</span>
-                      <p>{law}</p>
+              {/* Title */}
+              <div className="text-center space-y-1.5 pt-2">
+                <h4 className="font-bold uppercase tracking-wide text-sm sm:text-base underline underline-offset-4">
+                  SURAT KEPUTUSAN KEPALA {skConfig.schoolName}
+                </h4>
+                <p className="font-semibold text-xs tracking-wider">
+                  Nomor : {skConfig.skNumber}
+                </p>
+                <div className="pt-2">
+                  <p className="font-bold text-xs uppercase tracking-wide">TENTANG</p>
+                  <p className="font-bold text-xs uppercase tracking-wide max-w-2xl mx-auto text-center leading-normal">
+                    PEMBAGIAN TUGAS GURU DALAM KEGIATAN PROSES BELAJAR MENGAJAR, BIMBINGAN DAN KONSELING, TUGAS TAMBAHAN DAN TUGAS KARYAWAN PADA SEMESTER {skConfig.semester.toUpperCase()} TAHUN PELAJARAN {skConfig.academicYear}
+                  </p>
+                </div>
+                <p className="font-bold uppercase text-xs pt-2">KEPALA {skConfig.schoolName}</p>
+              </div>
+
+              {/* Menimbang */}
+              <div className="space-y-3 text-xs leading-relaxed">
+                <div className="grid grid-cols-12 gap-2">
+                  <div className="col-span-2 font-semibold">Menimbang</div>
+                  <div className="col-span-1 text-center">:</div>
+                  <div className="col-span-9 space-y-2">
+                    <div className="flex gap-2">
+                      <span className="font-semibold shrink-0">a.</span>
+                      <p className="text-justify">
+                        Bahwa proses belajar mengajar merupakan inti proses pendidikan dan pelaksanaan kegiatan pada satuan pendidikan sebagai bentuk Implementasi Kurikulum Merdeka dalam rangka pemulihan pembelajaran;
+                      </p>
                     </div>
+                    <div className="flex gap-2">
+                      <span className="font-semibold shrink-0">b.</span>
+                      <p className="text-justify">
+                        Bahwa untuk menjamin kelancaran Proses Belajar Mengajar (PBM) perlu ditetapkan Pemenuhan Beban Kerja Guru dan Kepala Sekolah, Pembagian Tugas Guru dalam Proses Belajar Mengajar dan Bimbingan, serta Tugas Tambahan pada Kurikulum yang diterapkan di {skConfig.schoolName}.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mengingat */}
+                <div className="grid grid-cols-12 gap-2 pt-2">
+                  <div className="col-span-2 font-semibold">Mengingat</div>
+                  <div className="col-span-1 text-center">:</div>
+                  <div className="col-span-9 space-y-1.5">
+                    {[
+                      'Undang-Undang Nomor 20 Tahun 2003 tentang Sistem Pendidikan Nasional.',
+                      'Undang-Undang Nomor 32 Tahun 2004 tentang Pemerintahan Daerah.',
+                      'Undang-Undang Nomor 14 Tahun 2005 tentang Guru dan Dosen sebagai Tenaga Profesional.',
+                      'Peraturan Pemerintah Nomor 74 Tahun 2008 tentang Guru.',
+                      'Peraturan Pemerintah Nomor 4 Tahun 2022 tentang Standar Nasional Pendidikan.',
+                      'Permendikbud Nomor 15 Tahun 2018 tentang Pemenuhan Beban Kerja Guru, Kepala Sekolah, dan Pengawas Sekolah.',
+                      'Permendikbudristek Nomor 5 Tahun 2022 tentang Standar Kompetensi Lulusan pada PAUD, Jenjang Pendidikan Dasar, dan Pendidikan Menengah.',
+                      'Permendikbudristek Nomor 7 Tahun 2022 tentang Standar Isi pada PAUD, Jenjang Pendidikan Dasar, dan Pendidikan Menengah.',
+                      'Permendikbudristek Nomor 16 Tahun 2022 tentang Standar Proses pada PAUD, Jenjang Pendidikan Dasar, dan Pendidikan Menengah.',
+                      'Permendikbudristek Nomor 21 Tahun 2022 tentang Standar Penilaian Pendidikan pada PAUD, Jenjang Pendidikan Dasar, dan Pendidikan Menengah.',
+                      'Keputusan Menteri Pendidikan, Kebudayaan, Riset, dan Teknologi Nomor 262/M/2022 tentang Pedoman Pemberlakuan Kurikulum dalam Rangka Pemulihan Pembelajaran.',
+                    ].map((law, index) => (
+                      <div key={index} className="flex gap-2 text-justify">
+                        <span className="font-semibold shrink-0">{index + 1}.</span>
+                        <p>{law}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Memperhatikan */}
+                <div className="grid grid-cols-12 gap-2 pt-2">
+                  <div className="col-span-2 font-semibold">Memperhatikan</div>
+                  <div className="col-span-1 text-center">:</div>
+                  <div className="col-span-9 space-y-1">
+                    <div className="flex gap-2">
+                      <span className="font-semibold shrink-0">a.</span>
+                      <p>Pedoman Umum Penyelenggaraan Administrasi Sekolah.</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <span className="font-semibold shrink-0">b.</span>
+                      <p>Kalender Pendidikan Kabupaten Jayapura Tahun Pelajaran {skConfig.academicYear}.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* --------------------------------------------------------------------- */}
+            {/* LEMBAR KE-2: DIKTUM KEPUTUSAN (MEMUTUSKAN, TTD, & TEMBUSAN) */}
+            {/* --------------------------------------------------------------------- */}
+            <div className="max-w-4xl mx-auto bg-white p-8 sm:p-12 shadow-lg border border-slate-200 rounded-xl space-y-6 text-slate-900 text-sm font-serif leading-relaxed print:shadow-none print:border-none print:p-0 print:max-w-none print:w-full print:f4-portrait print:break-before-page">
+              
+              {/* Visual Indicator of F4 Portrait Format for Screen */}
+              <div className="flex items-center justify-between pb-2 border-b border-slate-200 print:hidden text-slate-500 text-xs">
+                <span className="flex items-center gap-1.5 font-sans font-semibold text-blue-900 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200">
+                  <FileText className="w-3.5 h-3.5 text-blue-700" />
+                  Ukuran Kertas: F4 / Legal (21.5 × 33 cm) · Lembar Ke-2: Diktum Keputusan (MEMUTUSKAN) & Pengesahan
+                </span>
+                <span className="font-sans text-[11px] font-medium text-blue-700 bg-blue-100/60 px-2 py-0.5 rounded border border-blue-200">
+                  Halaman 2 dari 2 (SK)
+                </span>
+              </div>
+
+              {/* Running Page Number Header Standar Naskah Dinas */}
+              <div className="text-center font-serif text-xs text-slate-500 pb-1 print:text-black">
+                - 2 -
+              </div>
+
+              {/* Kata MEMUTUSKAN Turun Ke Lembar Kedua */}
+              <div className="text-center font-bold uppercase tracking-widest text-sm sm:text-base pt-1">
+                MEMUTUSKAN :
+              </div>
+
+              {/* Diktum Keputusan */}
+              <div className="space-y-3 text-xs leading-relaxed">
+                <div className="grid grid-cols-12 gap-2">
+                  <div className="col-span-2 font-semibold">Menetapkan</div>
+                  <div className="col-span-1 text-center">:</div>
+                  <div className="col-span-9 font-semibold uppercase">
+                    KEPUTUSAN KEPALA {skConfig.schoolName} TENTANG PEMBAGIAN BEBAN KERJA GURU DAN KEPALA SEKOLAH TAHUN PELAJARAN {skConfig.academicYear}.
+                  </div>
+                </div>
+                <div className="grid grid-cols-12 gap-2">
+                  <div className="col-span-2 font-semibold">PERTAMA</div>
+                  <div className="col-span-1 text-center">:</div>
+                  <div className="col-span-9 text-justify">
+                    Pemenuhan Beban Kerja Guru dan Kepala Sekolah Tahun Pelajaran {skConfig.academicYear} Semester {skConfig.semester} sebagaimana tercantum dalam Lampiran Surat Keputusan ini.
+                  </div>
+                </div>
+                <div className="grid grid-cols-12 gap-2">
+                  <div className="col-span-2 font-semibold">KEDUA</div>
+                  <div className="col-span-1 text-center">:</div>
+                  <div className="col-span-9 text-justify">
+                    Pembagian Tugas Guru dalam Proses Belajar Mengajar dan Bimbingan Tahun Pelajaran {skConfig.academicYear} Semester {skConfig.semester} sebagaimana tercantum dalam Lampiran Surat Keputusan ini.
+                  </div>
+                </div>
+                <div className="grid grid-cols-12 gap-2">
+                  <div className="col-span-2 font-semibold">KETIGA</div>
+                  <div className="col-span-1 text-center">:</div>
+                  <div className="col-span-9 text-justify">
+                    Pembagian Tugas Tambahan pada Kurikulum Merdeka (Wali Kelas, Pembina OSIS, Wakasek, dll) sebagaimana tercantum dalam lampiran Surat Keputusan ini.
+                  </div>
+                </div>
+                <div className="grid grid-cols-12 gap-2">
+                  <div className="col-span-2 font-semibold">KEEMPAT</div>
+                  <div className="col-span-1 text-center">:</div>
+                  <div className="col-span-9 text-justify">
+                    Keputusan ini berlaku sejak tanggal ditetapkan dan apabila terdapat kekeliruan akan dibetulkan sebagaimana mestinya.
+                  </div>
+                </div>
+
+                <div className="pt-2 text-justify">
+                  <p>
+                    Keputusan ini disampaikan kepada masing-masing yang bersangkutan untuk diketahui dan dilaksanakan dengan penuh rasa tanggung jawab.
+                  </p>
+                </div>
+              </div>
+
+              {/* Signature Block (Compact & Raised without excess space) */}
+              <div className="pt-2 flex justify-end">
+                <div className="w-72 space-y-0.5 text-xs">
+                  <p>Ditetapkan di : {skConfig.city}</p>
+                  <p>Pada tanggal : {skConfig.decreeDate}</p>
+                  <p className="font-bold pt-1">Kepala Sekolah,</p>
+                  <div className="h-14"></div>
+                  <p className="font-bold uppercase underline">{skConfig.headmasterName}</p>
+                  <p>NIP. {skConfig.headmasterNip}</p>
+                </div>
+              </div>
+
+              {/* Tembusan Block */}
+              <div className="pt-2 border-t border-slate-200 text-xs">
+                <p className="font-bold">Tembusan disampaikan kepada Yth:</p>
+                <ol className="list-decimal list-inside space-y-0.5 text-slate-700 mt-1">
+                  {(skConfig.tembusanList && skConfig.tembusanList.length > 0
+                    ? skConfig.tembusanList
+                    : [
+                        'Kepala Dinas Pendidikan Kabupaten Jayapura',
+                        'Pengawas Pembina SMP Kabupaten Jayapura',
+                        'Ketua Komite SMP Negeri 7 Sentani',
+                        'Arsip Sekolah',
+                      ]
+                  ).map((item, index) => (
+                    <li key={index}>{item}</li>
                   ))}
-                </div>
+                </ol>
               </div>
-
-              {/* Memperhatikan */}
-              <div className="grid grid-cols-12 gap-2 pt-2">
-                <div className="col-span-2 font-semibold">Memperhatikan</div>
-                <div className="col-span-1 text-center">:</div>
-                <div className="col-span-9 space-y-1">
-                  <div className="flex gap-2">
-                    <span className="font-semibold shrink-0">a.</span>
-                    <p>Pedoman Umum Penyelenggaraan Administrasi Sekolah.</p>
-                  </div>
-                  <div className="flex gap-2">
-                    <span className="font-semibold shrink-0">b.</span>
-                    <p>Kalender Pendidikan Kabupaten Jayapura Tahun Pelajaran {skConfig.academicYear}.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Memutuskan */}
-            <div className="text-center font-bold uppercase tracking-widest pt-4">
-              MEMUTUSKAN
-            </div>
-
-            <div className="space-y-3 text-xs leading-relaxed">
-              <div className="grid grid-cols-12 gap-2">
-                <div className="col-span-2 font-semibold">Menetapkan</div>
-                <div className="col-span-1 text-center">:</div>
-                <div className="col-span-9 font-semibold uppercase">
-                  KEPUTUSAN KEPALA {skConfig.schoolName} TENTANG PEMBAGIAN BEBAN KERJA GURU DAN KEPALA SEKOLAH TAHUN PELAJARAN {skConfig.academicYear}.
-                </div>
-              </div>
-              <div className="grid grid-cols-12 gap-2">
-                <div className="col-span-2 font-semibold">PERTAMA</div>
-                <div className="col-span-1 text-center">:</div>
-                <div className="col-span-9 text-justify">
-                  Pemenuhan Beban Kerja Guru dan Kepala Sekolah Tahun Pelajaran {skConfig.academicYear} Semester {skConfig.semester} sebagaimana tercantum dalam Lampiran 1 Surat Keputusan ini.
-                </div>
-              </div>
-              <div className="grid grid-cols-12 gap-2">
-                <div className="col-span-2 font-semibold">KEDUA</div>
-                <div className="col-span-1 text-center">:</div>
-                <div className="col-span-9 text-justify">
-                  Pembagian Tugas Guru dalam Proses Belajar Mengajar dan Bimbingan Tahun Pelajaran {skConfig.academicYear} Semester {skConfig.semester} sebagaimana tercantum dalam Lampiran Surat Keputusan ini.
-                </div>
-              </div>
-              <div className="grid grid-cols-12 gap-2">
-                <div className="col-span-2 font-semibold">KETIGA</div>
-                <div className="col-span-1 text-center">:</div>
-                <div className="col-span-9 text-justify">
-                  Pembagian Tugas Tambahan pada Kurikulum Merdeka (Wali Kelas, Pembina OSIS, Wakasek, dll) sebagaimana tercantum dalam lampiran Surat Keputusan ini.
-                </div>
-              </div>
-              <div className="grid grid-cols-12 gap-2">
-                <div className="col-span-2 font-semibold">KEEMPAT</div>
-                <div className="col-span-1 text-center">:</div>
-                <div className="col-span-9 text-justify">
-                  Keputusan ini berlaku sejak tanggal ditetapkan dan apabila terdapat kekeliruan akan dibetulkan sebagaimana mestinya.
-                </div>
-              </div>
-            </div>
-
-            {/* Signature Block */}
-            <div className="pt-2 flex justify-end">
-              <div className="w-72 space-y-0.5 text-xs">
-                <p>Ditetapkan di : {skConfig.city}</p>
-                <p>Pada tanggal : {skConfig.decreeDate}</p>
-                <p className="font-bold pt-1">Kepala Sekolah,</p>
-                <div className="h-14"></div>
-                <p className="font-bold uppercase underline">{skConfig.headmasterName}</p>
-                <p>NIP. {skConfig.headmasterNip}</p>
-              </div>
-            </div>
-
-            {/* Tembusan Block */}
-            <div className="pt-2 border-t border-slate-200 text-xs">
-              <p className="font-bold">Tembusan disampaikan kepada Yth:</p>
-              <ol className="list-decimal list-inside space-y-0.5 text-slate-700 mt-1">
-                {(skConfig.tembusanList && skConfig.tembusanList.length > 0
-                  ? skConfig.tembusanList
-                  : [
-                      'Kepala Dinas Pendidikan Kabupaten Jayapura',
-                      'Pengawas Pembina SMP Kabupaten Jayapura',
-                      'Ketua Komite SMP Negeri 7 Sentani',
-                      'Arsip Sekolah',
-                    ]
-                ).map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ol>
             </div>
           </div>
         )}
