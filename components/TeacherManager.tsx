@@ -129,18 +129,19 @@ export default function TeacherManager({ teachers, setTeachers, skConfig, onRese
               <tr className="bg-slate-100 text-slate-700 font-semibold border-b border-slate-200">
                 <th className="p-3 text-center w-12">No</th>
                 <th className="p-3">Nama Guru & NIP</th>
-                <th className="p-3">Pangkat / Gol</th>
+                <th className="p-3">Status</th>
                 <th className="p-3">Mata Pelajaran</th>
                 <th className="p-3">Tugas Tambahan</th>
                 <th className="p-3 text-center">Jml Kelas</th>
                 <th className="p-3 text-center">Total Jam</th>
+                <th className="p-3 text-center">Sertifikasi</th>
                 <th className="p-3 text-center w-24">Aksi</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200">
               {filteredTeachers.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="p-8 text-center text-slate-500">
+                  <td colSpan={9} className="p-8 text-center text-slate-500">
                     Tidak ada guru yang ditemukan.
                   </td>
                 </tr>
@@ -150,16 +151,20 @@ export default function TeacherManager({ teachers, setTeachers, skConfig, onRese
                   const classCount = Object.keys(t.classes || {}).length;
                   return (
                     <tr key={t.id} className="hover:bg-slate-50/80 transition-colors">
-                      <td className="p-3 text-center font-medium text-slate-600">{idx + 1}</td>
+                      <td className="p-3 text-center font-medium text-slate-600">{t.no || idx + 1}</td>
                       <td className="p-3">
                         <div className="font-semibold text-slate-900">{t.name}</div>
                         <div className="text-slate-500 text-[11px]">NIP. {t.nip || '-'}</div>
                       </td>
-                      <td className="p-3 text-slate-700">{t.golongan}</td>
+                      <td className="p-3">
+                        <span className="inline-block px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-800 border border-slate-200">
+                          {t.statusKepegawaian || 'GT'}
+                        </span>
+                      </td>
                       <td className="p-3 font-medium text-emerald-800">{t.subject}</td>
                       <td className="p-3">
                         <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-amber-50 text-amber-800 border border-amber-200">
-                          {t.additionalDuty}
+                          {t.additionalDuty || '-'}
                         </span>
                       </td>
                       <td className="p-3 text-center text-slate-700 font-mono">{classCount} Kelas</td>
@@ -167,6 +172,9 @@ export default function TeacherManager({ teachers, setTeachers, skConfig, onRese
                         <span className={`inline-block px-2 py-0.5 rounded font-mono font-bold text-xs ${totalHours >= 24 ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-800'}`}>
                           {totalHours} Jam
                         </span>
+                      </td>
+                      <td className="p-3 text-center text-[11px] text-slate-600 font-medium">
+                        {t.sertifikasi || 'Sertifikasi'}
                       </td>
                       <td className="p-3 text-center">
                         <div className="flex items-center justify-center gap-1">
@@ -268,7 +276,7 @@ export default function TeacherManager({ teachers, setTeachers, skConfig, onRese
                     value={editingTeacher.additionalDuty}
                     onChange={(e) => setEditingTeacher({ ...editingTeacher, additionalDuty: e.target.value })}
                     className="w-full p-2 border border-slate-300 rounded-lg text-slate-900 focus:ring-2 focus:ring-emerald-500 text-sm"
-                    placeholder="Contoh: Kepala Sekolah / Wakasek / Wali Kelas VII A"
+                    placeholder="Contoh: STANDAR PENILAIAN, PIKET, Wali Kelas VIII/c"
                   />
                 </div>
                 <div>
@@ -280,8 +288,35 @@ export default function TeacherManager({ teachers, setTeachers, skConfig, onRese
                     value={editingTeacher.additionalHours}
                     onChange={(e) => setEditingTeacher({ ...editingTeacher, additionalHours: parseInt(e.target.value) || 0 })}
                     className="w-full p-2 border border-slate-300 rounded-lg text-slate-900 focus:ring-2 focus:ring-emerald-500 text-sm"
-                    placeholder="Contoh: 12 atau 24"
+                    placeholder="Contoh: 2, 4, 12, atau 24"
                   />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Status Kepegawaian (GT/GTT)</label>
+                  <select
+                    value={editingTeacher.statusKepegawaian || 'GT'}
+                    onChange={(e) => setEditingTeacher({ ...editingTeacher, statusKepegawaian: e.target.value })}
+                    className="w-full p-2 border border-slate-300 rounded-lg text-slate-900 focus:ring-2 focus:ring-emerald-500 text-sm bg-white"
+                  >
+                    <option value="GT">GT (Guru Tetap PNS)</option>
+                    <option value="GT/PPPK">GT/PPPK (Guru Tetap PPPK)</option>
+                    <option value="Kontrak">Kontrak (Guru Kontrak Daerah)</option>
+                    <option value="Honor">Honor (Guru Tidak Tetap / Honorer)</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block font-semibold text-slate-700 mb-1">Keterangan Sertifikasi</label>
+                  <select
+                    value={editingTeacher.sertifikasi || 'Blm Sertifikasi'}
+                    onChange={(e) => setEditingTeacher({ ...editingTeacher, sertifikasi: e.target.value })}
+                    className="w-full p-2 border border-slate-300 rounded-lg text-slate-900 focus:ring-2 focus:ring-emerald-500 text-sm bg-white"
+                  >
+                    <option value="Sertifikasi">Sertifikasi</option>
+                    <option value="Blm Sertifikasi">Blm Sertifikasi</option>
+                  </select>
                 </div>
               </div>
 

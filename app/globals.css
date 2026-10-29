@@ -1,6 +1,20 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@page {
+  margin: 10mm;
+}
+
+@page portrait-page {
+  size: portrait;
+  margin: 12mm;
+}
+
+@page landscape-page {
+  size: landscape;
+  margin: 8mm;
+}
+
 @media print {
   body {
     background-color: white !important;
@@ -21,5 +35,11 @@
   .print\:break-before-page {
     break-before: page !important;
     page-break-before: always !important;
+  }
+  .print\:landscape {
+    page: landscape-page;
+  }
+  .print\:portrait {
+    page: portrait-page;
   }
 }

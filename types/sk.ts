@@ -11,6 +11,9 @@ export interface Teacher {
   };
   additionalDuty: string; // e.g. "Kepala Sekolah", "Wakasek Kurikulum", "Wali Kelas VII A", "Pembina OSIS", "Guru BK", "-"
   additionalHours: number; // e.g. 24 for Kepala Sekolah, 12 for Wakasek, 2 for Wali Kelas
+  statusKepegawaian?: string; // "GT" | "GT/PPPK" | "Kontrak" | "Honor"
+  sertifikasi?: string; // "Sertifikasi" | "Blm Sertifikasi"
+  tugasTambahanItems?: { nama: string; jam?: number }[];
 }
 
 export interface SKConfig {
@@ -20,13 +23,15 @@ export interface SKConfig {
   schoolEmail: string;
   city: string;
   skNumber: string;
-  academicYear: string; // e.g. "2025/2026"
+  academicYear: string; // e.g. "2026/2027"
   semester: string; // "Ganjil" | "Genap"
-  decreeDate: string; // e.g. "14 Juli 2025"
+  decreeDate: string; // e.g. "22 Juli 2026"
   headmasterName: string;
   headmasterNip: string;
   headmasterRank: string;
-  classesList: string[]; // e.g. ["VII A", "VII B", "VII C", "VIII A", "VIII B", "VIII C", "IX A", "IX B", "IX C"]
+  classesList: string[]; // e.g. ["VIIA", "VIIB", "VIIC", "VIIIA", "VIIIB", "VIIIC", "IXA", "IXB", "IXc"]
   leftLogo?: string;
   rightLogo?: string;
+  tembusanList?: string[];
+  footerNote?: string;
 }

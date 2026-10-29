@@ -55,31 +55,57 @@ export default function IndividualSKView({ teachers, skConfig }: IndividualSKVie
       {/* Individual Letter Document Canvas */}
       <div className="bg-white p-8 sm:p-12 shadow-lg border border-slate-200 rounded-xl space-y-8 text-slate-900 text-sm font-serif leading-relaxed print:shadow-none print:border-none print:p-0">
         
-        {/* Kop Surat */}
-        <div className="flex items-center justify-between border-b-4 border-slate-900 pb-6">
-          <div className="w-16 h-16 flex items-center justify-center shrink-0">
-            {skConfig.leftLogo ? (
-              <img src={skConfig.leftLogo} alt="Logo Kiri" className="w-16 h-16 object-contain" />
-            ) : (
-              <div className="w-14 h-14 bg-emerald-800 text-white rounded-full flex items-center justify-center text-[10px] font-bold text-center p-1 shadow">PEMDA</div>
-            )}
+        {/* Kop Surat Resmi (Format Tata Naskah Dinas) */}
+        <div className="w-full pb-2 mb-6">
+          {/* Baris Atas: Logo Kiri, Nama Instansi/Sekolah, Logo Kanan */}
+          <div className="flex items-center justify-between gap-4">
+            {/* Logo Kiri */}
+            <div className="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center shrink-0">
+              {skConfig.leftLogo ? (
+                <img src={skConfig.leftLogo} alt="Logo Kiri" className="w-20 h-20 sm:w-24 sm:h-24 object-contain" />
+              ) : (
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-emerald-800 text-white rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold text-center p-1 shadow">
+                  PEMDA
+                </div>
+              )}
+            </div>
+
+            {/* Teks Lembaga & Sekolah */}
+            <div className="text-center flex-1 px-2 space-y-1">
+              <h3 className="text-xs sm:text-sm font-bold tracking-widest uppercase text-slate-900 leading-tight">
+                PEMERINTAH KABUPATEN JAYAPURA
+              </h3>
+              <h3 className="text-xs sm:text-sm font-bold tracking-widest uppercase text-slate-900 leading-tight">
+                DINAS PENDIDIKAN
+              </h3>
+              <h2 className="text-base sm:text-xl md:text-2xl font-black tracking-wide uppercase text-slate-950 pt-0.5 leading-tight">
+                {skConfig.schoolName}
+              </h2>
+            </div>
+
+            {/* Logo Kanan */}
+            <div className="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center shrink-0">
+              {skConfig.rightLogo ? (
+                <img src={skConfig.rightLogo} alt="Logo Kanan" className="w-20 h-20 sm:w-24 sm:h-24 object-contain" />
+              ) : (
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-amber-600 text-white rounded-full flex items-center justify-center text-[10px] sm:text-xs font-bold text-center p-1 shadow">
+                  SEKOLAH
+                </div>
+              )}
+            </div>
           </div>
-          <div className="text-center flex-1 px-4 space-y-1">
-            <h3 className="text-xs sm:text-sm font-bold tracking-widest uppercase">PEMERINTAH KABUPATEN JAYAPURA</h3>
-            <h3 className="text-xs sm:text-sm font-bold tracking-widest uppercase">DINAS PENDIDIKAN</h3>
-            <h2 className="text-lg sm:text-xl font-extrabold tracking-wide uppercase pt-1 text-emerald-900">
-              {skConfig.schoolName}
-            </h2>
-            <p className="text-xs font-sans text-slate-600">
-              {skConfig.schoolAddress} | Telepon: {skConfig.schoolPhone} | Email: {skConfig.schoolEmail}
+
+          {/* Baris Alamat Memanjang Penuh Di Bawah Logo */}
+          <div className="text-center pt-2 pb-1.5 text-[11px] sm:text-xs font-sans text-slate-700 tracking-normal w-full border-t border-slate-300 mt-2">
+            <p className="leading-relaxed">
+              {skConfig.schoolAddress} &nbsp;·&nbsp; Telepon: {skConfig.schoolPhone} &nbsp;·&nbsp; Email: {skConfig.schoolEmail}
             </p>
           </div>
-          <div className="w-16 h-16 flex items-center justify-center shrink-0">
-            {skConfig.rightLogo ? (
-              <img src={skConfig.rightLogo} alt="Logo Kanan" className="w-16 h-16 object-contain" />
-            ) : (
-              <div className="w-14 h-14 bg-amber-600 text-white rounded-full flex items-center justify-center text-[10px] font-bold text-center p-1 shadow">SEKOLAH</div>
-            )}
+
+          {/* Garis Ganda Pembatas Kop Surat Resmi (Garis Tebal & Tipis) */}
+          <div className="w-full mt-0.5">
+            <div className="border-b-[3px] border-slate-950 w-full mb-[2px]"></div>
+            <div className="border-b-[1px] border-slate-950 w-full"></div>
           </div>
         </div>
 
@@ -185,12 +211,22 @@ export default function IndividualSKView({ teachers, skConfig }: IndividualSKVie
             <p>Ditetapkan di : {skConfig.city}</p>
             <p>Pada tanggal : {skConfig.decreeDate}</p>
             <p className="font-bold pt-2">Kepala Sekolah,</p>
-            <div className="h-16 flex items-center justify-center relative">
-              <p className="font-serif italic font-bold text-emerald-900 text-base">{skConfig.headmasterName}</p>
-            </div>
+            <div className="h-24"></div>
             <p className="font-bold uppercase underline">{skConfig.headmasterName}</p>
             <p>NIP. {skConfig.headmasterNip}</p>
           </div>
+        </div>
+
+        {/* Tembusan Block */}
+        <div className="pt-4 border-t border-slate-200 text-xs">
+          <p className="font-bold">Tembusan disampaikan kepada Yth:</p>
+          <ol className="list-decimal list-inside space-y-0.5 text-slate-700 mt-1">
+            <li>Kepala Dinas Pendidikan Kabupaten Jayapura</li>
+            <li>Pengawas Pembina SMP Kabupaten Jayapura</li>
+            <li>Guru yang bersangkutan ({selectedTeacher.name}) untuk dilaksanakan</li>
+            <li>Bendahara / Urusan Kepegawaian Sekolah</li>
+            <li>Arsip Sekolah</li>
+          </ol>
         </div>
 
       </div>

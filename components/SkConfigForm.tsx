@@ -146,6 +146,43 @@ export default function SkConfigForm({ skConfig, setSkConfig }: SkConfigFormProp
               </div>
             </div>
           </div>
+
+          {/* Live Preview Kop Surat */}
+          <div className="mt-4 p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <span className="font-bold text-slate-700 text-xs flex items-center gap-1.5">
+              <span>Pratinjau Kop Surat (Standar Resmi):</span>
+            </span>
+            <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-sm">
+              <div className="flex items-center justify-between gap-4">
+                <div className="w-16 h-16 flex items-center justify-center shrink-0">
+                  {formData.leftLogo ? (
+                    <img src={formData.leftLogo} alt="Logo Kiri" className="w-16 h-16 object-contain" />
+                  ) : (
+                    <div className="w-12 h-12 bg-emerald-800 text-white rounded-full flex items-center justify-center text-[9px] font-bold">PEMDA</div>
+                  )}
+                </div>
+                <div className="text-center flex-1 px-2 space-y-0.5">
+                  <h4 className="text-[11px] font-bold tracking-widest uppercase text-slate-900 leading-tight">PEMERINTAH KABUPATEN JAYAPURA</h4>
+                  <h4 className="text-[11px] font-bold tracking-widest uppercase text-slate-900 leading-tight">DINAS PENDIDIKAN</h4>
+                  <h3 className="text-sm font-black tracking-wide uppercase text-slate-950 pt-0.5 leading-tight">{formData.schoolName}</h3>
+                </div>
+                <div className="w-16 h-16 flex items-center justify-center shrink-0">
+                  {formData.rightLogo ? (
+                    <img src={formData.rightLogo} alt="Logo Kanan" className="w-16 h-16 object-contain" />
+                  ) : (
+                    <div className="w-12 h-12 bg-amber-600 text-white rounded-full flex items-center justify-center text-[9px] font-bold">SEKOLAH</div>
+                  )}
+                </div>
+              </div>
+              <div className="text-center pt-2 pb-1 text-[10px] font-sans text-slate-600 border-t border-slate-200 mt-2">
+                <p>{formData.schoolAddress} · Telepon: {formData.schoolPhone} · Email: {formData.schoolEmail}</p>
+              </div>
+              <div className="w-full mt-0.5">
+                <div className="border-b-[2px] border-slate-950 w-full mb-[2px]"></div>
+                <div className="border-b-[1px] border-slate-950 w-full"></div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* School Info */}
@@ -322,6 +359,45 @@ export default function SkConfigForm({ skConfig, setSkConfig }: SkConfigFormProp
                 className="w-full p-2 border border-slate-300 rounded-lg text-slate-900 font-medium text-sm"
               />
             </div>
+          </div>
+        </div>
+
+        {/* Tembusan SK */}
+        <div className="space-y-4 pt-4 border-t border-slate-200">
+          <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2 border-b border-slate-200 pb-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
+            <span>Daftar Tembusan SK</span>
+          </h3>
+          <div>
+            <label className="block font-semibold text-slate-700 mb-1">
+              Pihak yang Menerima Tembusan (Pisahkan dengan baris baru atau koma)
+            </label>
+            <textarea
+              rows={3}
+              value={(formData.tembusanList || []).join('\n')}
+              onChange={(e) => {
+                const list = e.target.value.split('\n').map((item) => item.trim()).filter(Boolean);
+                setFormData((prev) => ({ ...prev, tembusanList: list }));
+              }}
+              className="w-full p-2 border border-slate-300 rounded-lg text-slate-900 font-medium text-xs leading-relaxed"
+              placeholder="1. Kepala Dinas Pendidikan Kabupaten Jayapura&#10;2. Pengawas Pembina SMP Kabupaten Jayapura&#10;3. Ketua Komite SMP Negeri 7 Sentani&#10;4. Arsip Sekolah"
+            />
+            <p className="text-[11px] text-slate-500 mt-1">
+              Tembusan akan otomatis dicetak pada bagian bawah naskah SK.
+            </p>
+          </div>
+          <div className="pt-2">
+            <label className="block font-semibold text-slate-700 mb-1">
+              Keterangan Lampiran (Footnote Permendiknas)
+            </label>
+            <input
+              type="text"
+              name="footerNote"
+              value={formData.footerNote || ''}
+              onChange={handleChange}
+              className="w-full p-2 border border-slate-300 rounded-lg text-slate-900 font-medium text-xs"
+              placeholder="Disusun berdasarkan Permendiknas No. 30 tahun 2011 yang merupakan penyempurnaan Permendiknas No. 39 tahun 2009"
+            />
           </div>
         </div>
 
