@@ -23,11 +23,24 @@ export default function IndividualSKView({ teachers, skConfig }: IndividualSKVie
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+      
+      {/* Dynamic F4 Portrait print style */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @media print {
+            @page {
+              size: 215mm 330mm;
+              margin: 12mm;
+            }
+          }
+        `
+      }} />
+
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 print:hidden">
         <div>
           <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Pratinjau SK Pembagian Tugas Perorangan</h2>
           <p className="text-sm text-slate-600">
-            Pilih guru untuk melihat dan mencetak Surat Keputusan penugasan mengajar individual.
+            Format Kertas F4/Legal (21.5 × 33 cm) · Surat Keputusan penugasan mengajar individual.
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -47,16 +60,25 @@ export default function IndividualSKView({ teachers, skConfig }: IndividualSKVie
             className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-lg hover:bg-emerald-700 shadow transition"
           >
             <Printer className="w-4 h-4" />
-            <span>Cetak SK Perorangan</span>
+            <span>Cetak SK Perorangan (F4)</span>
           </button>
         </div>
       </div>
 
       {/* Individual Letter Document Canvas */}
-      <div className="bg-white p-8 sm:p-12 shadow-lg border border-slate-200 rounded-xl space-y-8 text-slate-900 text-sm font-serif leading-relaxed print:shadow-none print:border-none print:p-0">
+      <div className="bg-white p-8 sm:p-12 shadow-lg border border-slate-200 rounded-xl space-y-6 text-slate-900 text-sm font-serif leading-relaxed print:shadow-none print:border-none print:p-0 print:f4-portrait">
         
+        {/* Visual Indicator of F4 Portrait Format for Screen */}
+        <div className="flex items-center justify-between pb-2 border-b border-slate-200 print:hidden text-slate-500 text-xs">
+          <span className="flex items-center gap-1.5 font-sans font-semibold text-slate-800 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200">
+            <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
+            Ukuran Kertas: F4 / Legal (21.5 × 33 cm) · Format Portrait (Tegak)
+          </span>
+          <span className="font-sans text-[11px] text-slate-500">SK Penugasan Guru Mandiri</span>
+        </div>
+
         {/* Kop Surat Resmi (Format Tata Naskah Dinas) */}
-        <div className="w-full pb-2 mb-6">
+        <div className="w-full pb-2 mb-4">
           {/* Baris Atas: Logo Kiri, Nama Instansi/Sekolah, Logo Kanan */}
           <div className="flex items-center justify-between gap-4">
             {/* Logo Kiri */}
@@ -206,12 +228,12 @@ export default function IndividualSKView({ teachers, skConfig }: IndividualSKVie
         </div>
 
         {/* Signature */}
-        <div className="pt-8 flex justify-end">
-          <div className="w-72 space-y-1 text-xs">
+        <div className="pt-2 flex justify-end">
+          <div className="w-72 space-y-0.5 text-xs">
             <p>Ditetapkan di : {skConfig.city}</p>
             <p>Pada tanggal : {skConfig.decreeDate}</p>
-            <p className="font-bold pt-2">Kepala Sekolah,</p>
-            <div className="h-24"></div>
+            <p className="font-bold pt-1">Kepala Sekolah,</p>
+            <div className="h-14"></div>
             <p className="font-bold uppercase underline">{skConfig.headmasterName}</p>
             <p>NIP. {skConfig.headmasterNip}</p>
           </div>

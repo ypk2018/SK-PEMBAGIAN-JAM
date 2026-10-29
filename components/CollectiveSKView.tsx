@@ -26,12 +26,12 @@ export default function CollectiveSKView({ teachers, skConfig }: CollectiveSKVie
   return (
     <div className="max-w-[98%] xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       
-      {/* Inject dynamic print orientation style */}
+      {/* Inject dynamic print orientation style configured for F4 / Legal */}
       <style dangerouslySetInnerHTML={{
         __html: `
           @media print {
             @page {
-              size: ${printOrientation};
+              size: ${printOrientation === 'landscape' ? '330mm 215mm' : '215mm 330mm'};
               margin: ${printOrientation === 'landscape' ? '8mm' : '12mm'};
             }
           }
@@ -46,7 +46,7 @@ export default function CollectiveSKView({ teachers, skConfig }: CollectiveSKVie
             <span>Dokumen Surat Keputusan (SK) Kolektif</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
-            Format SK Kolektif resmi dengan Lampiran Matriks KBM Landscape untuk {skConfig.schoolName}.
+            Format Kertas F4/Legal: Naskah SK Portrait (21.5 × 33 cm) & Lampiran Matriks Landscape (33 × 21.5 cm).
           </p>
         </div>
 
@@ -71,7 +71,7 @@ export default function CollectiveSKView({ teachers, skConfig }: CollectiveSKVie
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              Surat SK (Portrait)
+              Surat SK (F4 Portrait)
             </button>
             <button
               onClick={() => { setActiveView('lampiran_only'); setPrintOrientation('landscape'); }}
@@ -81,7 +81,7 @@ export default function CollectiveSKView({ teachers, skConfig }: CollectiveSKVie
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              Lampiran Matriks (Landscape)
+              Lampiran (F4 Landscape)
             </button>
           </div>
 
@@ -89,28 +89,28 @@ export default function CollectiveSKView({ teachers, skConfig }: CollectiveSKVie
           <button
             onClick={() => handlePrint('lampiran_only', 'landscape')}
             className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl shadow transition"
-            title="Cetak khusus halaman lampiran matriks dalam format mendatar (landscape)"
+            title="Cetak khusus lampiran matriks KBM dalam kertas F4 Landscape (33 x 21.5 cm)"
           >
             <LayoutGrid className="w-4 h-4" />
-            <span>Cetak Lampiran (Landscape)</span>
+            <span>Cetak Lampiran (F4 Landscape)</span>
           </button>
 
           <button
             onClick={() => handlePrint('sk_only', 'portrait')}
             className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold rounded-xl transition"
-            title="Cetak khusus naskah SK dalam format tegak (portrait)"
+            title="Cetak khusus naskah SK dalam kertas F4 Portrait (21.5 x 33 cm)"
           >
             <FileText className="w-4 h-4" />
-            <span>Cetak SK (Portrait)</span>
+            <span>Cetak SK (F4 Portrait)</span>
           </button>
 
           <button
             onClick={() => handlePrint('all', 'landscape')}
             className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 text-xs font-semibold rounded-xl transition"
-            title="Cetak seluruh dokumen sekaligus"
+            title="Cetak seluruh dokumen sekaligus dalam kertas F4"
           >
             <Printer className="w-4 h-4" />
-            <span>Cetak Lengkap</span>
+            <span>Cetak Lengkap (F4)</span>
           </button>
         </div>
       </div>
@@ -119,13 +119,22 @@ export default function CollectiveSKView({ teachers, skConfig }: CollectiveSKVie
       <div className="space-y-8">
         
         {/* ========================================================================= */}
-        {/* PART 1: NASKAH UTAMA SURAT KEPUTUSAN (PORTRAIT STYLE) */}
+        {/* PART 1: NASKAH UTAMA SURAT KEPUTUSAN (F4 PORTRAIT STYLE) */}
         {/* ========================================================================= */}
         {(activeView === 'all' || activeView === 'sk_only') && (
-          <div className="max-w-4xl mx-auto bg-white p-8 sm:p-14 shadow-lg border border-slate-200 rounded-xl space-y-8 text-slate-900 text-sm font-serif leading-relaxed print:shadow-none print:border-none print:p-0 print:max-w-none print:w-full">
+          <div className="max-w-4xl mx-auto bg-white p-8 sm:p-12 shadow-lg border border-slate-200 rounded-xl space-y-6 text-slate-900 text-sm font-serif leading-relaxed print:shadow-none print:border-none print:p-0 print:max-w-none print:w-full print:f4-portrait">
             
+            {/* Visual Indicator of F4 Portrait Format for Screen */}
+            <div className="flex items-center justify-between pb-2 border-b border-slate-200 print:hidden text-slate-500 text-xs">
+              <span className="flex items-center gap-1.5 font-sans font-semibold text-slate-800 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-200">
+                <FileText className="w-3.5 h-3.5 text-slate-600" />
+                Ukuran Kertas: F4 / Legal (21.5 × 33 cm) · Format Portrait (Tegak)
+              </span>
+              <span className="font-sans text-[11px] text-slate-500">Standar Surat Keputusan Dinas</span>
+            </div>
+
             {/* Kop Surat Resmi (Format Tata Naskah Dinas) */}
-            <div className="w-full pb-2 mb-6">
+            <div className="w-full pb-2 mb-4">
               {/* Baris Atas: Logo Kiri, Nama Instansi/Sekolah, Logo Kanan */}
               <div className="flex items-center justify-between gap-4">
                 {/* Logo Kiri */}
@@ -303,19 +312,19 @@ export default function CollectiveSKView({ teachers, skConfig }: CollectiveSKVie
             </div>
 
             {/* Signature Block */}
-            <div className="pt-8 flex justify-end">
-              <div className="w-72 space-y-1 text-xs">
+            <div className="pt-2 flex justify-end">
+              <div className="w-72 space-y-0.5 text-xs">
                 <p>Ditetapkan di : {skConfig.city}</p>
                 <p>Pada tanggal : {skConfig.decreeDate}</p>
-                <p className="font-bold pt-2">Kepala Sekolah,</p>
-                <div className="h-24"></div>
+                <p className="font-bold pt-1">Kepala Sekolah,</p>
+                <div className="h-14"></div>
                 <p className="font-bold uppercase underline">{skConfig.headmasterName}</p>
                 <p>NIP. {skConfig.headmasterNip}</p>
               </div>
             </div>
 
             {/* Tembusan Block */}
-            <div className="pt-4 border-t border-slate-200 text-xs">
+            <div className="pt-2 border-t border-slate-200 text-xs">
               <p className="font-bold">Tembusan disampaikan kepada Yth:</p>
               <ol className="list-decimal list-inside space-y-0.5 text-slate-700 mt-1">
                 {(skConfig.tembusanList && skConfig.tembusanList.length > 0
@@ -338,15 +347,15 @@ export default function CollectiveSKView({ teachers, skConfig }: CollectiveSKVie
         {/* PART 2: LAMPIRAN SK KOLEKTIF - FORMAT LANDSCAPE */}
         {/* ========================================================================= */}
         {(activeView === 'all' || activeView === 'lampiran_only') && (
-          <div className={`bg-white p-6 sm:p-10 shadow-lg border border-slate-200 rounded-xl space-y-6 text-slate-900 text-xs font-serif print:shadow-none print:border-none print:p-0 print:m-0 w-full ${activeView === 'all' ? 'print:break-before-page' : ''}`}>
+          <div className={`bg-white p-6 sm:p-10 shadow-lg border border-slate-200 rounded-xl space-y-4 text-slate-900 text-xs font-serif print:shadow-none print:border-none print:p-0 print:m-0 w-full print:f4-landscape ${activeView === 'all' ? 'print:break-before-page' : ''}`}>
             
-            {/* Visual Indicator of Landscape Format for Screen */}
+            {/* Visual Indicator of F4 Landscape Format for Screen */}
             <div className="flex items-center justify-between pb-2 border-b border-slate-200 print:hidden text-slate-500 text-xs">
               <span className="flex items-center gap-1.5 font-sans font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
                 <LayoutGrid className="w-3.5 h-3.5 text-emerald-600" />
-                Format Kertas: Landscape (Mendatar)
+                Ukuran Kertas: F4 / Legal (33 × 21.5 cm) · Format Landscape (Mendatar)
               </span>
-              <span className="font-sans text-[11px]">Sesuai standar lampiran matriks beban jam mengajar guru</span>
+              <span className="font-sans text-[11px] text-slate-500">Matriks Beban Mengajar Guru SMPN 7 Sentani</span>
             </div>
 
             {/* Lampiran Header Metadata */}
@@ -467,7 +476,7 @@ export default function CollectiveSKView({ teachers, skConfig }: CollectiveSKVie
             </div>
 
             {/* Keterangan & Signature Block Sesuai PDF */}
-            <div className="pt-6 flex flex-col sm:flex-row justify-between items-start gap-8">
+            <div className="pt-2 flex flex-col sm:flex-row justify-between items-start gap-4">
               {/* Keterangan Permendiknas */}
               <div className="text-[11px] text-slate-700 max-w-md font-sans">
                 <p className="font-semibold text-slate-900">Keterangan :</p>
@@ -477,11 +486,11 @@ export default function CollectiveSKView({ teachers, skConfig }: CollectiveSKVie
               </div>
 
               {/* Signature */}
-              <div className="w-80 space-y-1 text-xs text-left pl-8">
+              <div className="w-80 space-y-0.5 text-xs text-left pl-8">
                 <p>Ditetapkan di : {skConfig.city}</p>
                 <p>Pada tanggal : {skConfig.decreeDate}</p>
-                <p className="font-bold pt-2">Kepala Sekolah,</p>
-                <div className="h-24"></div>
+                <p className="font-bold pt-1">Kepala Sekolah,</p>
+                <div className="h-14"></div>
                 <p className="font-bold uppercase underline">{skConfig.headmasterName}</p>
                 <p>NIP. {skConfig.headmasterNip}</p>
               </div>

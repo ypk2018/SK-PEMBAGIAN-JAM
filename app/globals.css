@@ -1,17 +1,19 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Ukuran Kertas Resmi F4 / Folio Indonesia (215mm x 330mm) */
 @page {
-  margin: 10mm;
-}
-
-@page portrait-page {
-  size: portrait;
+  size: 215mm 330mm;
   margin: 12mm;
 }
 
-@page landscape-page {
-  size: landscape;
+@page f4-portrait {
+  size: 215mm 330mm;
+  margin: 12mm;
+}
+
+@page f4-landscape {
+  size: 330mm 215mm;
   margin: 8mm;
 }
 
@@ -19,6 +21,8 @@
   body {
     background-color: white !important;
     color: black !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
   header, nav, button, .print\:hidden {
     display: none !important;
@@ -36,10 +40,10 @@
     break-before: page !important;
     page-break-before: always !important;
   }
-  .print\:landscape {
-    page: landscape-page;
+  .print\:f4-portrait {
+    page: f4-portrait;
   }
-  .print\:portrait {
-    page: portrait-page;
+  .print\:f4-landscape {
+    page: f4-landscape;
   }
 }
